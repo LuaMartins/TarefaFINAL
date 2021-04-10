@@ -21,6 +21,7 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
     private EditText campoAltura;
     private EditText campoNascimento;
     private final PersonagemDAO dao = new PersonagemDAO();
+    private Personagem Personagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +30,11 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
         setTitle("Formulário de Personagem"); //settar o titulo
 
         //PersonagemDAO dao = new PersonagemDAO(); // criando banco de data
-
-        // pegando os id's
-         campoNome = findViewById(R.id.editText_nome);
-         campoNascimento = findViewById(R.id.editText_nascimento);
-         campoAltura = findViewById(R.id.editText_altura);
+        inicializacaoCampos();
 
         Button botaosalvar = findViewById(R.id.button_salvar); // pegando botão para colocar ações
         botaosalvar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
@@ -46,17 +44,8 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
                 String altura = campoAltura.getText().toString();
 
                 Personagem personagemSalvo = new Personagem(nome, altura, nascimento);
-
                 dao.salva(personagemSalvo); // utilizar o metodo salvar para salvar os personagens
                 finish(); // finalizou e fechou
-
-               // startActivity(new Intent(FormularioPersonagemActivity.this, ListaPersonagemActivity.class)); //startando activity
-
-               /* Toast.makeText(FormularioPersonagemActivity.this, personagemSalvo.getNome() + " - " + personagemSalvo.getAltura() + " - " + personagemSalvo.getNascimento(), Toast.LENGTH_SHORT).show();*/
-
-
-
-                //new Personagem(nome, nascimento, altura); // juntando e instanciando o personagem
 
                 // buscando para modificar informações
                 personagemSalvo.setNome(nome);
@@ -65,18 +54,28 @@ public class FormularioPersonagemActivity extends AppCompatActivity {
                 dao.editar(personagemSalvo);
 
 
-                //Toast.makeText(FormularioPersonagemActivity.this,"Personagem salvo", Toast.LENGTH_SHORT).show();
 
                 Intent dados = getIntent(); // instanciei meus dados
-                Personagem personagem = (Personagem) dados.getSerializableExtra("personagem");
-                //buscando as 3 informações
-                campoNome.setText(personagem.getNome());
-                campoAltura.setText(personagem.getAltura());
-                campoNascimento.setText(personagem.getNascimento());
+                if(dados.hasExtra("personagem")) {
+                    Personagem personagem = (Personagem) dados.getSerializableExtra("personagem");
+                    //buscando as 3 informações
+                    campoNome.setText(personagem.getNome());
+                    campoAltura.setText(personagem.getAltura());
+                    campoNascimento.setText(personagem.getNascimento());
+                } else{
+                    Personagem = new Personagem();
+                }
 
 
             }
         });
+    }
+
+    private void inicializacaoCampos() {
+        // pegando os id's
+        campoNome = findViewById(R.id.editText_nome);
+        campoNascimento = findViewById(R.id.editText_nascimento);
+        campoAltura = findViewById(R.id.editText_altura);
     }
 
 

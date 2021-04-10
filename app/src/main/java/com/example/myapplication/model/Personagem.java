@@ -20,6 +20,10 @@ public class Personagem implements Serializable {
         this.altura = altura;
         this.nascimento = nascimento;
     }
+
+    public Personagem(){
+
+    }
 //convertendo para exibir
     @NonNull
     @Override
