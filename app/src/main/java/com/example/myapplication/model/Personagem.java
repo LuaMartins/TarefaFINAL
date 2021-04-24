@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Personagem implements Serializable {
 
-//pegandovariaveis
+    //pegandovariaveis
     private String nome;
     private String altura;
     private String nascimento;
@@ -21,13 +21,14 @@ public class Personagem implements Serializable {
         this.nascimento = nascimento;
     }
 
-    public Personagem(){
+    public Personagem() {
 
     }
-//convertendo para exibir
+
+    //convertendo para exibir
     @NonNull
     @Override
-    public String toString(){
+    public String toString() {
         return nome;
     }
 
@@ -56,12 +57,16 @@ public class Personagem implements Serializable {
     }
 
     //fazer modificações ao add itens
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
 
+    }
+
+    public boolean IdValido() {
+        return id > 0;
     }
 }

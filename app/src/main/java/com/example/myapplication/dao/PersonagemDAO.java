@@ -15,19 +15,17 @@ public class PersonagemDAO {
         personagemSalvo.setId(contadorDeId); // cada personagem salvo add um id
 
         personagens.add(personagemSalvo); // adicionar personagens
-        contadorDeId++; // adicionar 1
+        atualizarID();
 
     }
 
-    public void editar( Personagem personagem){
-        Personagem personagemEscolhido = null; // começar com condicionais
-        for (Personagem p:
-             personagens) { // for each para passar pela listagem
-            if(p.getId() == personagem.getId()){
-                personagemEscolhido = p; //guardar e armazenar informações
-            }
+    private void atualizarID() {
+        contadorDeId++; // adicionar 1
+    }
 
-        }
+    public void editar( Personagem personagem){
+        Personagem personagemEscolhido = buscaPersonagemID(personagem); //buscar o personagem escolhido
+
         if(personagemEscolhido != null) {
             int posicaoDoPersonagem = personagens.indexOf(personagemEscolhido);//posicionamento ideal
             personagens.set(posicaoDoPersonagem, personagem);
@@ -36,7 +34,26 @@ public class PersonagemDAO {
 
     }
 
+    private Personagem buscaPersonagemID(Personagem personagem) {
+        for (Personagem p:
+             personagens) { // for each para passar pela listagem
+            if(p.getId() == personagem.getId()){
+                return p; //guardar e armazenar informações
+            }
+
+        }
+        return null;
+    }
+
     public List<Personagem> todos(){
        return new ArrayList<>(personagens);
+    }
+
+    // usado para remover item da classe de persistencia
+    public void remove(Personagem personagem){
+        Personagem personagemDevolvido = buscaPersonagemID(personagem);
+        if(personagemDevolvido != null){
+            personagens.remove(personagemDevolvido);
+        }
     }
 }
